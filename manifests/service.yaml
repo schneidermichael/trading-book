@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: trading-book-frontend-service
+  namespace: tradingbook
+spec:
+  type: LoadBalancer
+  selector:
+    app: trading-book-frontend
+  ports:
+    - protocol: TCP
+      port: 80       # Port exposed by the service
+      targetPort: 3000 # Matches the containerPort above
