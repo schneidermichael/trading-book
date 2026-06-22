@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: trading-book-frontend
-        image: michaelxschneider/trading-book:v0.0.1
+        image: michaelxschneider/trading-book:ae167ec
         ports:
         - containerPort: 3000 # The port your app listens to inside the container
         resources:
