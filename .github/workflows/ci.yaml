@@ -50,10 +50,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: 'schneidermichael/trading-book-gitops' 
-        token: ${{ secrets.GITOPS_REPO_TOKEN }}              
+        token: ${{ secrets.GITOPS_REPO_TOKEN }}
+        persist-credentials: true              
         path: .
 
-    # X. Use sed to swap out the old image tag with the new short Git SHA
+    # 7. Use sed to swap out the old image tag with the new short Git SHA
     - name: Update Kubernetes Manifest
       run: |
         sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' deployment.yaml
