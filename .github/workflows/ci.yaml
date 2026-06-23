@@ -63,7 +63,7 @@ jobs:
         ls -R
         
         # Keep the sed command below it
-        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' gitops-repo/deployment.yaml
+        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' gitops-repo/gitops-repo/deployment.yaml
 
     - name: Commit and Push Manifest Changes
       run: |
