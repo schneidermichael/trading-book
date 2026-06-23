@@ -45,10 +45,18 @@ jobs:
           michaelxschneider/trading-book:latest
           michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}
 
-    # 6. Use sed to swap out the old image tag with the new short Git SHA
+    # 6. Checkout the SEPARATE GitOps Manifest Repository
+    - name: Checkout GitOps Repository
+      uses: actions/checkout@v4
+      with:
+        repository: 'schneidermichael/trading-book-gitops' # Your GitOps repo path
+        token: ${{ secrets.GITOPS_REPO_TOKEN }}              # Uses the PAT secret from Step 3
+        path: .
+
+    # X. Use sed to swap out the old image tag with the new short Git SHA
     - name: Update Kubernetes Manifest
       run: |
-        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' manifests/deployment.yaml
+        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' deployment.yaml
 
     - name: Commit and Push Manifest Changes
       run: |
