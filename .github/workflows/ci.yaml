@@ -54,10 +54,16 @@ jobs:
         persist-credentials: true              
         path: gitops-repo
 
-    # 7. Use sed to swap out the old image tag with the new short Git SHA
+    # 7. Add debug logging to see where the files are
     - name: Update Kubernetes Manifest
       run: |
-        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' deployment.yaml
+        echo "=== Current working directory ==="
+        pwd
+        echo "=== Listing all files recursively ==="
+        ls -R
+        
+        # Keep the sed command below it
+        sed -i 's|image: michaelxschneider/trading-book:.*|image: michaelxschneider/trading-book:${{ steps.vars.outputs.sha_short }}|g' gitops-repo/deployment.yaml
 
     - name: Commit and Push Manifest Changes
       run: |
